@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\PayPal;
 use App\ShoppingCart;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class ShoppingCartsController extends Controller
 {
@@ -23,5 +21,13 @@ class ShoppingCartsController extends Controller
         $shoppingCart = $this->getShoppingCart();
         $paypal = new PayPal($shoppingCart);
         $paypal->requestPayment();
+    }
+
+    public function show($id)
+    {
+        $shoppingCart = ShoppingCart::where('customid', $id)->first();
+        $order = $shoppingCart->order();
+        $data = compact(['shoppingCart', 'order']);
+        return view('shopping-carts.completed', $data);
     }
 }

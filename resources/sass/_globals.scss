@@ -23,3 +23,12 @@ body {
         border-bottom: solid 1px;
     }
 }
+.created {
+    color: orange;
+}
+.sent {
+    color: darken(royalblue, 20);
+}
+.received {
+    color: green;
+}

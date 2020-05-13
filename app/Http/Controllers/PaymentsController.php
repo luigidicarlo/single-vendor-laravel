@@ -25,8 +25,13 @@ class PaymentsController extends Controller
             return redirect(route('cart'));
         }
 
-        $details = Order::createFromPaypalResponse($response, $shoppingCart);
-        $data = compact(['shoppingCart', 'details']);
+        $shoppingCart->approve();
+
+        Session::remove('shoppingCartId');
+
+        $created = Order::createFromPaypalResponse($response, $shoppingCart);
+        $order = Order::find($created->id);
+        $data = compact(['shoppingCart', 'order']);
         
         return view('shopping-carts.completed', $data);
     }

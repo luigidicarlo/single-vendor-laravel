@@ -22,12 +22,43 @@ class Order extends Model
         ]);
     }
 
+    public static function totalMonth()
+    {
+        return Order::monthly()->sum('total');
+    }
+
+    public static function totalMonthCount()
+    {
+        return Order::monthly()->count();
+    }
+
+    public function scopeLatest($query)
+    {
+        return $query->orderId()->monthly();
+    }
+
+    public function scopeOrderId($query)
+    {
+        return $query->orderBy('id', 'desc');
+    }
+
+    public function scopeMonthly($query)
+    {
+        return $query->whereMonth('created_at', '=', date('m'));
+    }
+
     public function getStatus()
     {
         switch ($this->status) {
-            case 'created': return 'Creado'; break;
-            case 'sent': return 'Enviado'; break;
-            case 'received': return 'Recibido'; break;
+            case 'created':
+                return 'Creado';
+                break;
+            case 'sent':
+                return 'Enviado';
+                break;
+            case 'received':
+                return 'Recibido';
+                break;
         }
     }
 }

@@ -38,6 +38,11 @@
                     </tbody>
                 </table>
             </div>
+            <div class="text-right">
+                <a href="{{ route('pay') }}" class="btn btn-primary btn-raised">
+                    Pagar
+                </a>
+            </div>
         </div>
     </div>
 @endsection
