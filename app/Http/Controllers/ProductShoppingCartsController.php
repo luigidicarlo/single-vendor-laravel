@@ -29,6 +29,12 @@ class ProductShoppingCartsController extends Controller
             'product_id' => $request->product_id
         ]);
 
+        if ($request->ajax()) {
+            return response()->json([
+                'productsCount' => $shoppingCart->productsSize()
+            ]);
+        }
+
         if ($result) {
             return redirect('/cart');
         } else {

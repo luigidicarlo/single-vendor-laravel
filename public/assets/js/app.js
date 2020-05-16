@@ -111,6 +111,39 @@ $(document).ready(function () {
       text: "Recibido"
     }]
   });
+  $(".add-to-cart").on("submit", function (e) {
+    e.preventDefault();
+    var form = $(e.target);
+    var button = form.find("[type=submit]");
+    var timeoutDuration = 2000;
+    $.ajax({
+      url: form.attr("action"),
+      method: form.attr("method"),
+      data: form.serialize(),
+      dataType: 'JSON',
+      beforeSend: function beforeSend() {
+        button.val("Cargando...");
+        button.attr("disabled", "true");
+      },
+      success: function success(res) {
+        button.css("background-color", "#00c853").val("Agregado");
+        $('span.badge.badge-info').html(Number(res.productsCount));
+        restartButton(button);
+      },
+      error: function error(err) {
+        button.css("background-color", "red").val("Hubo un error");
+        restartButton(button);
+      }
+    });
+
+    var restartButton = function restartButton(button) {
+      setTimeout(function () {
+        return button.val("Agregar al carrito").removeAttr("style").removeAttr("disabled");
+      }, timeoutDuration);
+    };
+
+    return false;
+  });
 });
 
 /***/ }),
