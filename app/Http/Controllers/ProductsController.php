@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 class ProductsController extends Controller
 {
@@ -40,6 +42,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $hasFile = $request->hasFile('image') && $request->image->isValid();
         $product = new Product;
         
         $product->name = $request->name;
@@ -47,7 +50,15 @@ class ProductsController extends Controller
         $product->price = $request->price;
         $product->user_id = Auth::user()->id;
 
+        if ($hasFile) {
+            $extension = $request->image->extension();
+            $product->extension = $extension;
+        }
+
         if ($product->save()) {
+            if ($hasFile) {
+                $request->image->storeAs('img', $product->id.'.'.$extension);
+            }
             return redirect('/products');
         } else {
             $data = compact('product');
@@ -66,6 +77,19 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $data = compact('product');
         return view('products.show', $data);
+    }
+
+    public function image($filename)
+    {
+        $path = storage_path('app/img/'.$filename);
+
+        if (!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $mimeType = File::mimeType($path);
+        return Response::make($file, 200, [
+            'Content-Type' => $mimeType
+        ]);
     }
 
     /**

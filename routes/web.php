@@ -17,6 +17,8 @@ Route::resource('cart', 'ShoppingCartsController', [
     'only' => ['show']
 ]);
 
+Route::get('/products/img/{filename}', 'ProductsController@image');
+
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('products', 'ProductsController');
     Route::get('/home', 'HomeController@home')->name('home');

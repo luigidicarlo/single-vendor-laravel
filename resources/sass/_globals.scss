@@ -13,10 +13,8 @@ body {
     z-index: 100;
 }
 .product {
-    width: 600px;
-    max-width: 100%;
     padding: 1rem;
-    margin: 0 auto;
+    margin: 1rem auto;
 
     h1 {
         padding-bottom: 10px;
@@ -31,4 +29,10 @@ body {
 }
 .received {
     color: green;
+}
+
+@media only screen and (max-width: 1024px) {
+    .product h1 {
+        font-size: 1.25rem;
+    }
 }

@@ -1,7 +1,10 @@
-{!! Form::open(['url' => $url, 'method' => $method]) !!}
+{!! Form::open(['url' => $url, 'method' => $method, 'files' => true]) !!}
 
 <div class="form-group">
     {{ Form::text('name', $product->name, ['class' => 'form-control', 'placeholder' => 'Nombre...']) }}
+</div>
+<div class="form-group">
+    {{ Form::file('image', ['class' => 'form-control']) }}
 </div>
 <div class="form-group">
     {{ Form::textarea('description', $product->description, ['class' => 'form-control', 'placeholder' => 'Describe tu producto...']) }}
