@@ -38,11 +38,13 @@
                     </tbody>
                 </table>
             </div>
+            @if (count($products))
             <div class="text-right">
                 <a href="{{ route('pay') }}" class="btn btn-primary btn-raised">
                     Pagar
                 </a>
             </div>
+            @endif
         </div>
     </div>
 @endsection

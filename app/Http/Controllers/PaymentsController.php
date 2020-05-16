@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Session;
 
 class PaymentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('shoppingCart');
+    }
+
     private function executePayment(Request $request, $shoppingCart)
     {
         $paypal = new PayPal($shoppingCart);
@@ -18,7 +23,7 @@ class PaymentsController extends Controller
 
     public function store(Request $request)
     {
-        $shoppingCart = $this->getShoppingCart();
+        $shoppingCart = $request->shoppingCart;
         $response = $this->executePayment($request, $shoppingCart);
         
         if ($response['ACK'] != 'Success') {
@@ -31,6 +36,7 @@ class PaymentsController extends Controller
 
         $created = Order::createFromPaypalResponse($response, $shoppingCart);
         $order = Order::find($created->id);
+        $order->sendMail();
         $data = compact(['shoppingCart', 'order']);
         
         return view('shopping-carts.completed', $data);

@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Session;
 
 class ProductShoppingCartsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('shoppingCart');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -17,8 +22,8 @@ class ProductShoppingCartsController extends Controller
      */
     public function store(Request $request)
     {
-        $shoppingCartId = Session::get('shoppingCartId');
-        $shoppingCart = ShoppingCart::findOrCreateBySessionId($shoppingCartId);
+        $shoppingCart = $request->shoppingCart;
+        
         $result = ProductShoppingCart::create([
             'shopping_cart_id' => $shoppingCart->id,
             'product_id' => $request->product_id

@@ -12,9 +12,4 @@ use Illuminate\Support\Facades\Session;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    protected function getShoppingCart() {
-        $shoppingCartId = Session::get('shoppingCartId');
-        return ShoppingCart::findOrCreateBySessionId($shoppingCartId);
-    }
 }

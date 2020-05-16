@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Mail\OrderCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -60,5 +62,18 @@ class Order extends Model
                 return 'Recibido';
                 break;
         }
+    }
+
+    public function shoppingCart()
+    {
+        return $this->belongsTo('App\ShoppingCart');
+    }
+
+    public function sendMail()
+    {
+        $recipient = env('APP_ENV') === 'local'
+            ? env('MAIL_TEST_RECIPIENT')
+            : $this->email;
+        Mail::to($recipient)->send(new OrderCreated($this));
     }
 }

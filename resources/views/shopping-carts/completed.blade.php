@@ -48,7 +48,7 @@
             </table>
         </div>
         <div class="text-center my-4">
-            <a class="btn btn-primary btn-raised" href="{{ url('/cart/'.$shoppingCart->customid) }}">Enlace permanente de tu compra</a>
+            <a class="btn btn-primary btn-raised" href="{{ url('/cart/'.$order->shoppingCart()->first()->customid) }}">Enlace permanente de tu compra</a>
         </div>
     </div>
 </div>

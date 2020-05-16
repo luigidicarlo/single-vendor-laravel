@@ -12,17 +12,17 @@ Route::resource('shopping_cart_products', 'ProductShoppingCartsController', [
 ]);
 
 Route::get('/cart', 'ShoppingCartsController@index')->name('cart');
+
 Route::resource('cart', 'ShoppingCartsController', [
     'only' => ['show']
-]);
-Route::resource('orders', 'OrdersController', [
-    'only' => ['index', 'update']
 ]);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('products', 'ProductsController');
-    
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/payments', 'ShoppingCartsController@payment')->name('pay');
     Route::get('/payments/store', 'PaymentsController@store');
+    Route::resource('orders', 'OrdersController', [
+        'only' => ['index', 'update']
+    ]);
 });

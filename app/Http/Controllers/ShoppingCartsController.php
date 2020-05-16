@@ -4,21 +4,27 @@ namespace App\Http\Controllers;
 
 use App\PayPal;
 use App\ShoppingCart;
+use Illuminate\Http\Request;
 
 class ShoppingCartsController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $shoppingCart = $this->getShoppingCart();
+        $this->middleware('shoppingCart');
+    }
+
+    public function index(Request $request)
+    {
+        $shoppingCart = $request->shoppingCart;
         $products = $shoppingCart->products()->get();
         $total = $shoppingCart->total();
         $data = compact(['products', 'total']);
         return view('shopping-carts.index', $data);
     }
 
-    public function payment()
+    public function payment(Request $request)
     {
-        $shoppingCart = $this->getShoppingCart();
+        $shoppingCart = $request->shoppingCart;
         $paypal = new PayPal($shoppingCart);
         $paypal->requestPayment();
     }
