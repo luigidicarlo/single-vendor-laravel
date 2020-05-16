@@ -568,50 +568,8 @@
                                                             <h1 class="h1">Recibo de tu pago en {{ env('APP_NAME') }}
                                                             </h1>
                                                             <strong>¡Hola, {{ $order->email }}!</strong>
-                                                            <p>A continuación, puedes ver los detalles de tu compra.</p>
+                                                            <p>El estado de tu pedido se ha actualizado. Ahora es: <strong>{{ $order->getStatus() }}</strong></p>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td valign="top" style="padding-top:0; padding-bottom:0;">
-                                                        <table border="0" cellpadding="10" cellspacing="0" width="100%"
-                                                            class="templateDataTable">
-                                                            <tr>
-                                                                <th scope="col" valign="top" width="25%"
-                                                                    class="dataTableHeading"
-                                                                    mc:edit="data_table_heading00">
-                                                                    Producto
-                                                                </th>
-                                                                <th scope="col" valign="top" width="25%"
-                                                                    class="dataTableHeading"
-                                                                    mc:edit="data_table_heading01">
-                                                                    Precio (USD)
-                                                                </th>
-                                                            </tr>
-                                                            @foreach ($products as $product)
-                                                            <tr mc:repeatable>
-                                                                <td valign="top" class="dataTableContent"
-                                                                    mc:edit="data_table_content00">
-                                                                    {{ $product->name }}
-                                                                </td>
-                                                                <td valign="top" class="dataTableContent"
-                                                                    mc:edit="data_table_content01">
-                                                                    {{ $product->price }}
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                            <tr>
-                                                                <th scope="col" valign="top" width="25%"
-                                                                    class="dataTableHeading"
-                                                                    mc:edit="data_table_heading02">
-                                                                    Total pagado
-                                                                </th>
-                                                                <td valign="top" class="dataTableContent"
-                                                                    mc:edit="data_table_content01">
-                                                                    {{ $order->total }}
-                                                                </td>
-                                                            </tr>
-                                                        </table>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -622,7 +580,9 @@
                                                                 <td valign="middle" class="templateButtonContent">
                                                                     <div mc:edit="std_content02">
                                                                         <a href="{{ url('/cart/'.$customId) }}"
-                                                                            target="_blank" style="background-color: royalblue; color: #CCCCCC">Ver más sobre tu compra</a>
+                                                                            target="_blank"
+                                                                            style="background-color: royalblue; color: #CCCCCC">Ver
+                                                                            más sobre tu compra</a>
                                                                     </div>
                                                                 </td>
                                                             </tr>

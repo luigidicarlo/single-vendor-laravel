@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Mail\OrderCreated;
+use App\Mail\OrderUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -71,9 +72,20 @@ class Order extends Model
 
     public function sendMail()
     {
-        $recipient = env('APP_ENV') === 'local'
+        $recipient = $this->getRecipient();
+        Mail::to($recipient)->send(new OrderCreated($this));
+    }
+
+    public function sendUpdateMail()
+    {
+        $recipient = $this->getRecipient();
+        Mail::to($recipient)->send(new OrderUpdated($this));
+    }
+
+    private function getRecipient()
+    {
+        return env('APP_ENV') === 'local'
             ? env('MAIL_TEST_RECIPIENT')
             : $this->email;
-        Mail::to($recipient)->send(new OrderCreated($this));
     }
 }
