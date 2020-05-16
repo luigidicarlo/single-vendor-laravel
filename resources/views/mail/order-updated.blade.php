@@ -568,7 +568,7 @@
                                                             <h1 class="h1">Recibo de tu pago en {{ env('APP_NAME') }}
                                                             </h1>
                                                             <strong>¡Hola, {{ $order->email }}!</strong>
-                                                            <p>El estado de tu pedido se ha actualizado. Ahora es: <strong>{{ $order->getStatus() }}</strong></p>
+                                                            <p>El estado de tu pedido se ha actualizado. Ahora es: <strong>{{ $order->getStatus() }}</strong>.</p>
                                                         </div>
                                                     </td>
                                                 </tr>

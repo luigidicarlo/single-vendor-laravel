@@ -36,7 +36,6 @@ class PaymentsController extends Controller
 
         $created = Order::createFromPaypalResponse($response, $shoppingCart);
         $order = Order::find($created->id);
-        $order->sendMail();
         $data = compact(['shoppingCart', 'order']);
         
         return view('shopping-carts.completed', $data);
